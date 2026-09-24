@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureAuth - Adaptive Authentication</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="loginPage" class="page active">
+        <div class="login-card">
+
+            <div class="brand">
+                <div class="logo">🛡️</div>
+                <h1>SecureAuth</h1>
+                <p>Adaptive Authentication System</p>
+            </div>
+
+            <form id="loginForm">
+
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <div class="login-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="newDevice">
+                        New device
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="newLocation">
+                        New location
+                    </label>
+                </div>
+
+                <button type="submit" class="primary-btn">
+                    Secure Login
+                </button>
+
+                <button type="button" id="emergencyBtn" class="emergency-btn">
+                    🚨 Emergency Access
+                </button>
+
+            </form>
+
+            <div class="demo-info">
+                <strong>Demo Account</strong>
+                <span>Email: demo@example.com</span>
+                <span>Password: demo123</span>
+            </div>
+
+            <p id="loginMessage" class="message"></p>
+
+        </div>
+    </div>
+
+
+    <div id="mfaPage" class="page">
+
+        <div class="login-card">
+
+            <div class="brand">
+                <div class="logo">🔐</div>
+                <h1>Additional Verification</h1>
+                <p>Suspicious login detected</p>
+            </div>
+
+            <div class="risk-box high">
+                <span>⚠️</span>
+                <div>
+                    <strong>Step-up authentication required</strong>
+                    <p id="riskReason">High-risk login detected.</p>
+                </div>
+            </div>
+
+            <label for="mfaCode">Enter 6-digit verification code</label>
+
+            <input
+                type="text"
+                id="mfaCode"
+                maxlength="6"
+                inputmode="numeric"
+                placeholder="123456"
+            >
+
+            <button id="verifyMfaBtn" class="primary-btn">
+                Verify & Continue
+            </button>
+
+            <button id="cancelMfaBtn" class="secondary-btn">
+                Cancel
+            </button>
+
+            <p class="demo-note">
+                Demo MFA code: <strong>123456</strong>
+            </p>
+
+            <p id="mfaMessage" class="message"></p>
+
+        </div>
+
+    </div>
+
+
+    <div id="dashboardPage" class="page">
+
+        <header class="topbar">
+
+            <div class="topbar-brand">
+                🛡️ <span>SecureAuth</span>
+            </div>
+
+            <div class="topbar-actions">
+                <span id="userEmail"></span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+
+        </header>
+
+        <main class="dashboard">
+
+            <div class="welcome">
+                <h1>Security Dashboard</h1>
+                <p>Monitor your account and authentication activity.</p>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">🟢</div>
+                    <div>
+                        <span>Risk Level</span>
+                        <strong id="dashboardRisk">LOW</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🔐</div>
+                    <div>
+                        <span>Authentication</span>
+                        <strong id="dashboardAuth">Verified</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">💻</div>
+                    <div>
+                        <span>Device</span>
+                        <strong id="dashboardDevice">Trusted</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🌐</div>
+                    <div>
+                        <span>Session</span>
+                        <strong>Active</strong>
+                    </div>
+                </div>
+
+            </div>
+
+            <section class="content-card">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Current Session</h2>
+                        <p>Your current authenticated session.</p>
+                    </div>
+
+                    <span class="status-badge active-badge">
+                        ● Active
+                    </span>
+                </div>
+
+                <div class="session-details">
+
+                    <div>
+                        <span>Device</span>
+                        <strong id="sessionDevice">Windows / Chrome</strong>
+                    </div>
+
+                    <div>
+                        <span>Location</span>
+                        <strong id="sessionLocation">Current Location</strong>
+                    </div>
+
+                    <div>
+                        <span>Risk Score</span>
+                        <strong id="sessionRisk">10</strong>
+                    </div>
+
+                    <div>
+                        <span>Authentication</span>
+                        <strong id="sessionAuth">Password Verified</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section class="content-card">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Security Activity</h2>
+                        <p>Recent authentication events.</p>
+                    </div>
+                </div>
+
+                <div id="userAuditLog" class="audit-list"></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <div id="adminPage" class="page">
+
+        <header class="topbar">
+
+            <div class="topbar-brand">
+                🛡️ <span>SecureAuth Admin</span>
+            </div>
+
+            <button id="adminLogoutBtn" class="logout-btn">
+                Logout
+            </button>
+
+        </header>
+
+        <main class="dashboard">
+
+            <div class="welcome">
+                <h1>Admin Security Dashboard</h1>
+                <p>Monitor and manage active authentication sessions.</p>
+            </div>
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div>
+                        <span>Total Sessions</span>
+                        <strong id="totalSessions">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🟢</div>
+                    <div>
+                        <span>Active Sessions</span>
+                        <strong id="activeSessions">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⚠️</div>
+                    <div>
+                        <span>High Risk</span>
+                        <strong id="highRiskSessions">0</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🚫</div>
+                    <div>
+                        <span>Revoked</span>
+                        <strong id="revokedSessions">0</strong>
+                    </div>
+                </div>
+
+            </div>
+
+            <section class="content-card">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Active Sessions</h2>
+                        <p>Review and revoke suspicious sessions.</p>
+                    </div>
+                </div>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Device</th>
+                                <th>Location</th>
+                                <th>Risk</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="sessionTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <section class="content-card">
+
+                <div class="section-title">
+                    <div>
+                        <h2>Audit Log</h2>
+                        <p>Security events recorded by the system.</p>
+                    </div>
+                </div>
+
+                <div id="adminAuditLog" class="audit-list"></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
